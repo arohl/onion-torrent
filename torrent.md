@@ -77,8 +77,41 @@ Repeat for USB disk to mount on */mnt/torrent* and reboot.
 
 ### Install common packages for development
 ```
-opkg install vim bash python git
+opkg install vim bash python python-pip pyOledExp git git-http ca-bundle
 vi /etc/passwd
 ```
 
 and set default shell to */bin/bash*
+
+### Install and configure transmission
+```
+opkg install transmission-daemon-openssl transmission-web
+mkdir -p /mnt/torrent/downloads/incomplete
+uci set transmission.@transmission[0].enabled=‘1'
+uci set transmission.@transmission[0].config_dir='/etc/transmission’
+uci set transmission.@transmission[0].download_dir='/mnt/torrent/downloads’
+uci set transmission.@transmission[0].incomplete_dir='/mnt/torrent/downloads/incomplete’
+uci set transmission.@transmission[0].incomplete_dir_enabled=‘true'
+uci set transmission.@transmission[0].rpc_whitelist_enabled=‘false'
+uci commit transmission
+/etc/init.d/transmission enable
+/etc/init.d/transmission start
+```
+
+### Install transmissionrpc
+unfortunately the pip installation fails so install from source
+```
+pip install six
+wget https://pypi.python.org/packages/f5/f8/96a979b669a7219cb4299ea5512e1678ba7f59d91bd8a952c51405131768/transmissionrpc-0.11.tar.gz#md5=b2f918593e509f0e66e2e643291b436d
+tar -zxvf transmissionrpc-0.11.tar.gz
+cd transmissionrpc-0.11
+python setup.py install
+cd ..
+rm -rf transmissionrpc-0.11*
+```
+
+### Install script for monitoring transmission
+```
+mkdir src
+cd src
+git clone https://github.com/arohl/onion-torrent.git
