@@ -13,7 +13,7 @@ while True:
   total = float(statvfs.f_blocks) * statvfs.f_frsize / 1000000000
   free = float(statvfs.f_bfree) * statvfs.f_frsize / 1000000000
   oledExp.setCursor(0, 0)
-  oledExp.write('Time: ' + time.strftime("%H:%M:%S"))
+  oledExp.write('Date: ' + time.strftime("%d %b %y %H:%M"))
   oledExp.setCursor(1, 0)
-  oledExp.write('Free: {:.3}/{:.3} GB'.format(free, total))
+  oledExp.write('Free: {:.4}/{:.4} GB'.format(free, total))
   time.sleep(5)
