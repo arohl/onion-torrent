@@ -1,3 +1,5 @@
+USB_MOUNT = '/mnt/torrent'
+
 import os
 import time
 import transmissionrpc
@@ -7,7 +9,7 @@ status  = oledExp.driverInit()
 oledExp.setTextColumns()
 
 while True:
-  statvfs = os.statvfs('/mnt/torrrent')
+  statvfs = os.statvfs(USB_MOUNT)
   total = float(statvfs.f_blocks) * statvfs.f_frsize / 1000000000
   free = float(statvfs.f_bfree) * statvfs.f_frsize / 1000000000
   oledExp.write('Free: {:.3}/{:.3} GB'.format(free, total))
