@@ -98,8 +98,35 @@ uci commit transmission
 /etc/init.d/transmission start
 ```
 
+### Install and configure Samba to share files as guest
+```
+opkg install samba36-server
+```
+
+and change /etc/config/samba to
+
+```
+config samba
+	option 'name'			'Torrent'
+	option 'workgroup'		'WORKGROUP'
+	option 'description'	'Torrent'
+	option 'homes'			'0'
+	option 'interface'		'apcli0'
+config 'sambashare'
+	option 'name'			'share'
+	option 'path'			'/mnt/torrent/downloads/'
+	option 'guest_ok'		'yes'
+```
+
+and restart samba service
+
+```
+service samba restart
+```
+
 ### Install transmissionrpc
-unfortunately the pip installation fails so install from source
+Unfortunately the pip installation fails so install from source
+
 ```
 pip install six
 wget https://pypi.python.org/packages/f5/f8/96a979b669a7219cb4299ea5512e1678ba7f59d91bd8a952c51405131768/transmissionrpc-0.11.tar.gz#md5=b2f918593e509f0e66e2e643291b436d
@@ -115,3 +142,4 @@ rm -rf transmissionrpc-0.11*
 mkdir src
 cd src
 git clone https://github.com/arohl/onion-torrent.git
+```
