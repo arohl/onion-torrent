@@ -22,7 +22,7 @@ Install appropriate packages. Note problem with kernel mismatch for *kmod-fs-ext
 
 ```
 opkg install e2fsprogs
-opkg install kmod-fs-ext4 —nodeps
+opkg install —nodeps kmod-fs-ext4 
 ```
 
 Set up SDHC to provide extra disk space for system
